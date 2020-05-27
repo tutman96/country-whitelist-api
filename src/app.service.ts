@@ -22,20 +22,20 @@ export class AppService {
     if (!ipAddressInformation) {
       throw new BadRequestException('IP address information not found for that ip address')
     }
-    
+
     const ipAddressCountry = ipAddressInformation.country || ipAddressInformation.registered_country;
     if (!ipAddressCountry) {
       throw new NotFoundException('The IP address provided does not resolve to any country')
     }
-    
+
     const countryInWhitelist = countryWhitelist.includes(ipAddressCountry.iso_code);
-    
+
     if (!countryInWhitelist) {
       return {
         valid: false
       }
     }
-    
+
     return {
       valid: true,
       countryCode: ipAddressCountry.iso_code

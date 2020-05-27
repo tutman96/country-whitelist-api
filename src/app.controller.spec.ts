@@ -9,7 +9,7 @@ describe('AppController', () => {
     validateIPAddressInOneOfCountry: jest.fn().mockReturnValue({ valid: true })
   };
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module = Test.createTestingModule({
       controllers: [AppController],
       providers: [AppService],
@@ -21,6 +21,10 @@ describe('AppController', () => {
 
     app = await module.compile();
   });
+  
+  beforeEach(() => {
+    serviceMock.validateIPAddressInOneOfCountry.mockClear();
+  })
 
   describe('validateIPAddress', () => {
     it('should return the results of AppService.validateIPAddressInOneOfCountry', async () => {
