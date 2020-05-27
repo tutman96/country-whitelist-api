@@ -80,6 +80,17 @@ describe('AppService', () => {
         valid: true
       }))
     })
+    
+    it('should return the country code of the matched country', async () => {
+      const appService = app.get<AppService>(AppService);
+      getMock.mockReturnValueOnce(USLookup);
+      
+      const response = await appService.validateIPAddressInOneOfCountry('8.8.8.8', ['US', 'CN']);
+      
+      expect(response).toEqual(expect.objectContaining({
+        countryCode: 'US'
+      }))
+    })
   });
 });
 
