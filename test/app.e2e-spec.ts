@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { AppModule } from './../src/app.module';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 
 const KNOWN_US_IP = '99.116.181.22';
 
@@ -14,6 +14,8 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe());
+    
     await app.init();
   });
 
