@@ -46,5 +46,5 @@ export class ValidationResponse {
 	@ApiPropertyOptional({
 		type: 'string'
 	})
-	countryCode?: string = null;
+	countryCode?: string;
 }
