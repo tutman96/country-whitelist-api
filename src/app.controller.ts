@@ -1,12 +1,20 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
+import { ValidationRequest, ValidationResponse } from './app.dto';
+import { STATUS_CODES } from 'http';
+import { ApiResponse, ApiOkResponse } from '@nestjs/swagger';
 
-@Controller()
+@Controller('/validate-ip')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Post()
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: ValidationResponse })
+  async validateIPAddress(@Body() validationRequest: ValidationRequest) {
+    return await this.appService.validateIPAddressInOneOfCountry(
+      validationRequest.ipAddress,
+      validationRequest.countryCodeWhitelist
+    );
   }
 }
