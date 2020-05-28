@@ -1,0 +1,41 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  labels:
+    app: {{ .Chart.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: "{{ .Release.Service }}"
+    release: "{{ .Release.Name }}"
+  name: {{ .Chart.Name }}
+spec:
+  replicas: {{ default 1 .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+      release: "{{ .Release.Name }}"
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: "RollingUpdate"
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        release: "{{ .Release.Name }}"
+    spec:
+      containers:
+        - name: api
+          image: {{ .Values.deployment.image | quote }}
+          imagePullPolicy: {{ .Values.deployment.imagePullPolicy | quote }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+              name: api
+          # readinessProbe:
+          #   httpGet:
+          #     path: /healthz
+          #     port: api
+      restartPolicy: {{ .Values.deployment.restartPolicy }}

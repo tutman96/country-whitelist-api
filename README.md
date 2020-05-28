@@ -35,3 +35,25 @@ $ yarn test:e2e
 # test coverage
 $ yarn test:cov
 ```
+
+## Updating the MaxMind IP Database
+In order to update the maxmind database, all you need to do is rebuild the docker image, or run `yarn install --force` if running it locally.
+
+## Building the Docker image
+To build the docker image, you must pass the MaxMind License Key in as an arg, like so:
+```bash
+$ docker build -t $YOUR_IMAGE --build-arg MAXMIND_LICENSE_KEY=<YOUR LICENSE KEY> .
+```
+
+## Running the api server in Kubernetes
+In order to run the api server in Kubernetes, you need to build the docker image as described above. You will also need Helm 3 and a working Kubernetes cluster.
+
+If running on Docker for Mac, simply enable the built-in Kubernetes cluster, and run the following helm command:
+```bash
+helm upgrade --install country-whitelist chart/ --set deployment.image=$YOUR_IMAGE --set deployment.imagePullPolicy=Never
+```
+
+If running on an external Kubernetes cluster, you will need to push the docker image to a registry, and reference in the same helm command:
+```bash
+helm upgrade --install country-whitelist chart/ --set deployment.image=gcr.io/$YOUR_PROJECT/$YOUR_IMAGE
+```
