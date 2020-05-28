@@ -20,6 +20,7 @@ export function IsArrayOfValidCountryCodes() {
 export class ValidationRequest {
 	@ApiProperty({
 		type: 'string',
+		description: 'IP address to check the validity of. Can be an IPv4 or IPv6 address',
 		example: '1.2.3.4'
 	})
 	@IsIP()
@@ -27,9 +28,9 @@ export class ValidationRequest {
 
 	@ApiProperty({
 		type: 'string',
+		description: 'A list of ISO codes to validate the IP address registration in',
 		isArray: true,
 		example: ['US', 'CN']
-		// TODO validation against ISO country codes
 	})
 	@IsArray()
 	@ArrayNotEmpty()
@@ -40,11 +41,13 @@ export class ValidationRequest {
 export class ValidationResponse {
 	@ApiProperty({
 		type: 'boolean',
+		description: 'Will return true if the IP address provided is registered in a country provided in the whitelist'
 	})
 	valid: boolean;
 
 	@ApiProperty({
-		type: 'string'
+		type: 'string',
+		description: 'The ISO code of the country the IP address is registered in'
 	})
 	countryCode: string;
 }
