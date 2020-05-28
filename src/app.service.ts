@@ -30,14 +30,8 @@ export class AppService {
 
     const countryInWhitelist = countryWhitelist.includes(ipAddressCountry.iso_code);
 
-    if (!countryInWhitelist) {
-      return {
-        valid: false
-      }
-    }
-
     return {
-      valid: true,
+      valid: countryInWhitelist,
       countryCode: ipAddressCountry.iso_code
     }
   }

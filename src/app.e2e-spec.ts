@@ -33,7 +33,7 @@ describe('AppController (e2e)', () => {
         .post('/validate-ip')
         .send({ ipAddress: KNOWN_US_IP, countryCodeWhitelist: ['CN'] })
         .expect(200)
-        .expect({ valid: false });
+        .expect({ valid: false, countryCode: 'US' });
     })
 
     it('400 - returns bad request if ip address is malformed', async () => {

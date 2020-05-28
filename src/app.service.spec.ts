@@ -70,6 +70,17 @@ describe('AppService', () => {
       }))
     })
     
+    it('should return the country code if country resolved is not in whitelist', async () => {
+      const appService = app.get<AppService>(AppService);
+      getMock.mockReturnValueOnce(ChinaLookup);
+      
+      const response = await appService.validateIPAddressInOneOfCountry('8.8.8.8', ['US']);
+      
+      expect(response).toEqual(expect.objectContaining({
+        countryCode: 'CN'
+      }))
+    })
+    
     it('should return valid = true if country resolved is in whitelist', async () => {
       const appService = app.get<AppService>(AppService);
       getMock.mockReturnValueOnce(USLookup);
