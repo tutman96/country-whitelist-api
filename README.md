@@ -1,6 +1,6 @@
 ## Installation
 
-You need to signup for a _free_ Maxmind account to get a license key. Go to https://www.maxmind.com/en/geolite2/signup, obtain your key and put it in the MAXMIND_LICENSE_KEY into a .env file.
+You need to signup for a free Maxmind account to get a license key. Go to https://www.maxmind.com/en/geolite2/signup, obtain your key and put it in the MAXMIND_LICENSE_KEY into a .env file.
 
 ```bash
 # .env
@@ -13,26 +13,21 @@ Finally, run `yarn install`
 ## Running the app
 
 ```bash
-# development
+# start the server, but don't reload when the source changes
 $ yarn start
 
-# watch mode
+# start the server and restart it if any of the source changes
 $ yarn start:dev
-
-# production mode
-$ yarn start:prod
 ```
+Once the api is running, you can navigate to [http://localhost:3000/swagger](http://localhost:3000/swagger) to see the API documentation and play with the API
 
 ## Test
 
 ```bash
-# unit tests
+# run all of the tests
 $ yarn test
 
-# e2e tests
-$ yarn test:e2e
-
-# test coverage
+# run all of the tests and print test coverage
 $ yarn test:cov
 ```
 
@@ -57,3 +52,16 @@ If running on an external Kubernetes cluster, you will need to push the docker i
 ```bash
 helm upgrade --install country-whitelist chart/ --set deployment.image=gcr.io/$YOUR_PROJECT/$YOUR_IMAGE
 ```
+
+Validate that the service is running by executing `kubectl get pods` and getting an output similar to:
+```bash
+NAME                                READY   STATUS    RESTARTS   AGE
+country-whitelist-cdd8cc646-qxwvw   1/1     Running   0          5m2s
+```
+
+Port-forward the api port to a local port:
+```bash
+kubectl port-forward svc/country-whitelist 3000
+```
+
+And now you can navigate to [http://localhost:3000/swagger](http://localhost:3000/swagger) to see the API documentation and play with the API
