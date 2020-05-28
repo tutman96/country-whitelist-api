@@ -15,7 +15,7 @@ describe('AppController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(new ValidationPipe());
-    
+
     await app.init();
   });
 
@@ -87,4 +87,12 @@ describe('AppController (e2e)', () => {
         .expect(400)
     })
   });
+
+  describe('GET /healthz', () => {
+    it('200 - returns ok if the server is up', async () => {
+      await request(app.getHttpServer())
+        .get('/healthz')
+        .expect(200);
+    })
+  })
 });

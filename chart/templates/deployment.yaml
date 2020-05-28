@@ -34,8 +34,8 @@ spec:
             - containerPort: 3000
               protocol: TCP
               name: api
-          # readinessProbe:
-          #   httpGet:
-          #     path: /healthz
-          #     port: api
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: api
       restartPolicy: {{ .Values.deployment.restartPolicy }}
