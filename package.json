@@ -27,6 +27,8 @@
     "dotenv": "^8.2.0",
     "geolite2": "^3.0.0",
     "maxmind": "^4.1.1",
+    "nestjs-pino": "^1.2.0",
+    "pino": "^6.3.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.5",
@@ -66,7 +68,8 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "**/*.(t|j)s",
+      "!main.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"

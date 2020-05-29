@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppService } from './app.service';
 import { open } from 'maxmind';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { LoggerModule } from 'nestjs-pino';
 
 jest.mock('maxmind');
 const mockedMaxmindOpen = open as any as jest.Mock;

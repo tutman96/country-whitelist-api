@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BadRequestException } from '@nestjs/common';
+import { LoggerModule } from 'nestjs-pino';
 
 describe('AppController', () => {
   let app: TestingModule;
@@ -11,6 +12,7 @@ describe('AppController', () => {
 
   beforeAll(async () => {
     const module = Test.createTestingModule({
+      imports: [LoggerModule.forRoot()],
       controllers: [AppController],
       providers: [AppService],
     })
